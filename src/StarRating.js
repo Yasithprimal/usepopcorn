@@ -4,6 +4,7 @@ export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
   size = 48,
+  onSetRating,
 }) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
@@ -17,13 +18,18 @@ export default function StarRating({
     color,
   };
 
+  function handleRating(key) {
+    setRating(key + 1);
+    onSetRating = rating;
+  }
+
   return (
     <div style={containerStyle}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
           <Star
             key={i}
-            onRate={() => setRating(i + 1)}
+            onRate={() => handleRating(i)}
             full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
             hoverIn={() => setTempRating(i + 1)}
             hoverOut={() => setTempRating(0)}
